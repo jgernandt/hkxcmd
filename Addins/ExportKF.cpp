@@ -311,44 +311,19 @@ bool AnimationExport::exportController()
 	transformOut.setSize(numTracks);
 	hkReal startTime = 0.0;
 
-	hkArray<hkInt16> tracks;
-	tracks.setSize(numTracks);
-	for (int i=0; i<numTracks; ++i) tracks[i]=i;
-
-	vector<BoneDataReference> dataList;
-	dataList.resize(numTracks);
-
-   vector<bool> scaleWarn;
-   scaleWarn.resize(numTracks);
-
-	NiObjectNETRef placeHolder = new NiObjectNET();
-	for (int i=0,n=numTracks; i<n; ++i)
-	{
-		NiTransformControllerRef controller = new NiTransformController();
-		NiTransformInterpolatorRef interp = new NiTransformInterpolator();
-		controller->SetInterpolator(interp);
-
-		NiTransformDataRef data = new NiTransformData();
-		interp->SetData(data);
-
-		hkQsTransform localTransform = skeleton->m_referencePose[i];
-		interp->SetTranslation(TOVECTOR3(localTransform.getTranslation()));
-		interp->SetRotation(TOQUAT(localTransform.getRotation()));
-		interp->SetScale(Average(TOVECTOR3(localTransform.getScale()))); // no scaling?
-
-		BoneDataReference& boneData = dataList[i];
-		boneData.name = skeleton->m_bones[i].m_name;
-		boneData.transCont = controller;
-		boneData.transData = data;
-		boneData.trans.reserve(nframes);
-		boneData.rot.reserve(nframes);
-		boneData.scale.reserve(nframes);
-		boneData.lastTrans = interp->GetTranslation();
-		boneData.lastRotate = interp->GetRotation();
-		boneData.lastScale = interp->GetScale();
+	std::vector<std::vector<Niflib::Key<Niflib::Vector3>>> tKeys(numTracks);
+	std::vector<std::vector<Niflib::Key<Niflib::Quaternion>>> rKeys(numTracks);
+	std::vector<std::vector<Niflib::Key<float>>> sKeys(numTracks);
+	for (int i = 0; i < numTracks; i++) {
+		tKeys[i] = std::vector<Niflib::Key<Niflib::Vector3>>(nframes);
+		rKeys[i] = std::vector<Niflib::Key<Niflib::Quaternion>>(nframes);
+		sKeys[i] = std::vector<Niflib::Key<float>>(nframes);
 	}
 
-   hkReal time = startTime;
+	vector<bool> scaleWarn;
+	scaleWarn.resize(numTracks);
+	
+	hkReal time = startTime;
 	for (int iFrame=0; iFrame<nframes; ++iFrame, time += incrFrame)
 	{
 
@@ -356,79 +331,26 @@ bool AnimationExport::exportController()
 		//hkUint32 nAnnotations = anim->getAnnotations(time, incrFrame, annotations.begin(), nbones);
 
 		anim->samplePartialTracks(time, numTracks, transformOut.begin(), nfloats, floatsOut.begin(), HK_NULL);
-      hkaSkeletonUtils::normalizeRotations(transformOut.begin(), numTracks);
+		hkaSkeletonUtils::normalizeRotations(transformOut.begin(), numTracks);
 
-		// assume 1-to-1 transforms
-		for (int i=0; i<numTracks; ++i)
-		{
-			BoneDataReference& data = dataList[i];
-			hkQsTransform& transform = transformOut[i];			
-			Vector3Key vk;
-			vk.time = time;
-			vk.data = TOVECTOR3(transform.getTranslation());
-			if (!EQUALS(vk.data,data.lastTrans))
-			{
-				data.trans.push_back(vk);
-				data.lastTrans = vk.data;
-			}
+		for (int i = 0; i < numTracks; i++) {
+			tKeys[i][iFrame].time = time;
+			tKeys[i][iFrame].data = TOVECTOR3(transformOut[i].getTranslation());
 
-			QuatKey qk;
-			qk.time = time;
-			//Did they remove the function to normalise quats? Who cares, just do it ourselves.
-			Niflib::Quaternion quat = TOQUAT(transform.getRotation());
-			float norm = std::sqrt(quat.Dot(quat));
-			qk.data = quat * (1.0f / norm);
-			if (!EQUALS(qk.data,data.lastRotate))
-			{
-				data.rot.push_back(qk);
-				data.lastRotate = qk.data;
-			}
+			rKeys[i][iFrame].time = time;
+			rKeys[i][iFrame].data = TOQUAT(transformOut[i].getRotation());
 
-			FloatKey sk;
-			sk.time = time;
-         Niflib::Vector3 sc = TOVECTOR3(transform.getScale());
-         if (!EQUALS(sc.x,sc.y,0.01f) && !EQUALS(sc.x,sc.z,0.01f))
-         {
-            if (!scaleWarn[i])
-            {
-               scaleWarn[i] = true;
-               Log::Warn("Non-uniform scaling found while processing '%s'.", skeleton->m_bones[i].m_name.cString());
-            }
-         }
-            
-			sk.data = Average(sc);
-			if (!EQUALS(data.lastScale,sk.data,0.01f))
-			{
-				data.scale.push_back(sk);
-				data.lastScale = sk.data;
+			//Warn about anisotropic scale
+			Niflib::Vector3 sc = TOVECTOR3(transformOut[i].getScale());
+			if (!EQUALS(sc.x, sc.y, 0.01f) && !EQUALS(sc.x, sc.z, 0.01f)) {
+				if (!scaleWarn[i]) {
+					scaleWarn[i] = true;
+					Log::Warn("Non-uniform scaling found while processing '%s'.", skeleton->m_bones[i].m_name.cString());
+				}
 			}
-		}
-	}
-	for (int i=0; i<numTracks; ++i)
-	{
-		bool keep=false;
-		BoneDataReference& data = dataList[i];
-		if (!data.trans.empty())
-		{
-			data.transData->SetTranslateType(LINEAR_KEY);
-			data.transData->SetTranslateKeys(data.trans);
-			keep = true;
-		}
-		if (!data.rot.empty())
-		{
-			data.transData->SetRotateType(QUADRATIC_KEY);
-			data.transData->SetQuatRotateKeys(data.rot);
-			keep = true;
-		}
-		if (!data.scale.empty())
-		{
-			data.transData->SetScaleType(LINEAR_KEY);
-			data.transData->SetScaleKeys(data.scale);
-			keep = true;
-		}
-		if (keep)
-		{
-			seq->AddController(data.name, data.transCont);
+			//An average might be completely nonsensical. Might as well just use the x scale.
+			sKeys[i][iFrame].time = time;
+			sKeys[i][iFrame].data = sc.x;
 		}
 	}
 
@@ -442,20 +364,53 @@ bool AnimationExport::exportController()
 		keys.push_back( first );
 		keys.push_back(last);
 		textKeys->SetKeys(keys);
-		seq->SetTextKeysName("Annotations");
-		seq->SetTextKeys(textKeys);
 		seq->SetTextKey(textKeys);
 	}
 
-	// remove controllers now
-	vector<ControllerLink> links = seq->GetControlledBlocks();
-	for (vector<ControllerLink>::iterator itr = links.begin(); itr != links.end(); ++itr)
-	{
-		NiTransformControllerRef controller = (*itr).controller;
-		(*itr).interpolator = controller->GetInterpolator();
-		(*itr).controller = NULL;
+	std::vector<Niflib::ControllerLink> blocks;
+
+	//Add transform tracks
+	for (int i = 0; i < numTracks; i++) {
+		Niflib::NiTransformInterpolatorRef iplr = new Niflib::NiTransformInterpolator;
+		//Initialise iplr value to bind pose (doesn't matter, but nice for reference)
+		Niflib::Vector3 refT = TOVECTOR3(skeleton->m_referencePose[i].getTranslation());
+		Niflib::Quaternion refR = TOQUAT(skeleton->m_referencePose[i].getRotation());
+		Niflib::Vector3 refS = TOVECTOR3(skeleton->m_referencePose[i].getScale());
+		iplr->SetTranslation(refT);
+		iplr->SetRotation(refR);
+		iplr->SetScale(refS.x);
+
+		iplr->SetData(new Niflib::NiTransformData);
+
+		//Better stick to the established convention here, sensible or not
+		iplr->GetData()->SetTranslateType(Niflib::LINEAR_KEY);
+		iplr->GetData()->SetRotateType(Niflib::QUADRATIC_KEY);
+		iplr->GetData()->SetScaleType(Niflib::LINEAR_KEY);
+
+		//if always at bind pose, keep only a single key
+		int j;
+		for (j = 0; j < tKeys[i].size() && EQUALS(tKeys[i][j].data, refT); j++) {}
+		if (j == tKeys[i].size())
+			tKeys[i].resize(1);
+		iplr->GetData()->SetTranslateKeys(tKeys[i]);
+
+		for (j = 0; j < rKeys[i].size() && EQUALS(rKeys[i][j].data, refR); j++) {}
+		if (j == rKeys[i].size())
+			rKeys[i].resize(1);
+		iplr->GetData()->SetQuatRotateKeys(rKeys[i]);
+
+		for (j = 0; j < sKeys[i].size() && EQUALS(sKeys[i][j].data, refS.x); j++) {}
+		if (j == sKeys[i].size())
+			sKeys[i].resize(1);
+		iplr->GetData()->SetScaleKeys(sKeys[i]);
+
+		blocks.push_back(Niflib::ControllerLink());
+		blocks.back().nodeName = skeleton->m_bones[i].m_name.cString();
+		blocks.back().interpolator = Niflib::StaticCast<NiInterpolator>(iplr);
+		blocks.back().variable1 = "Havok Transform Track";
 	}
-	seq->SetControlledBlocks(links);
+
+	seq->SetControlledBlocks(blocks);
 
 	return true;
 }
