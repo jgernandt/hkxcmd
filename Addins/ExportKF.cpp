@@ -157,8 +157,11 @@ struct AnimationExport
 	NiControllerSequenceRef seq;
 	hkRefPtr<hkaAnimationBinding> binding;
 	hkRefPtr<hkaSkeleton> skeleton;
+
+	static bool s_exportFloatTracks;
 };
 
+bool AnimationExport::s_exportFloatTracks = false;
 
 float QuatDot(const Quaternion& q, const Quaternion&p)
 {
@@ -320,6 +323,13 @@ bool AnimationExport::exportController()
 		sKeys[i] = std::vector<Niflib::Key<float>>(nframes);
 	}
 
+	std::vector<std::vector<Niflib::Key<float>>> floatKeys;
+	if (s_exportFloatTracks) {
+		floatKeys.resize(nfloats);
+		for (int i = 0; i < nfloats; i++)
+			floatKeys[i] = std::vector<Niflib::Key<float>>(nframes);
+	}
+
 	vector<bool> scaleWarn;
 	scaleWarn.resize(numTracks);
 	
@@ -351,6 +361,13 @@ bool AnimationExport::exportController()
 			//An average might be completely nonsensical. Might as well just use the x scale.
 			sKeys[i][iFrame].time = time;
 			sKeys[i][iFrame].data = sc.x;
+		}
+		
+		if (s_exportFloatTracks) {
+			for (int i = 0; i < nfloats; i++) {
+				floatKeys[i][iFrame].time = time;
+				floatKeys[i][iFrame].data = floatsOut[i];
+			}
 		}
 	}
 
@@ -408,6 +425,21 @@ bool AnimationExport::exportController()
 		blocks.back().nodeName = skeleton->m_bones[i].m_name.cString();
 		blocks.back().interpolator = Niflib::StaticCast<NiInterpolator>(iplr);
 		blocks.back().variable1 = "Havok Transform Track";
+	}
+
+	//Add float tracks (optional)
+	if (s_exportFloatTracks) {
+		for (int i = 0; i < nfloats; i++) {
+			Niflib::NiFloatInterpolatorRef iplr = new Niflib::NiFloatInterpolator;
+			iplr->SetData(new Niflib::NiFloatData);
+			iplr->GetData()->SetKeys(floatKeys[i]);
+			iplr->GetData()->SetKeyType(Niflib::LINEAR_KEY);
+
+			blocks.push_back(Niflib::ControllerLink());
+			blocks.back().nodeName = skeleton->m_floatSlots[binding->m_floatTrackToFloatSlotIndices[i]].cString();
+			blocks.back().interpolator = Niflib::StaticCast<NiInterpolator>(iplr);
+			blocks.back().variable1 = "Havok Float Track";
+		}
 	}
 
 	seq->SetControlledBlocks(blocks);
@@ -558,6 +590,7 @@ static void HelpString(hkxcmd::HelpType type){
 			Log::Info("  anim.kf       Path to Gamebryo animation to write (Default: anim.hkx with kf ext)" );
 			Log::Info("<Switches>" );
 			Log::Info(" -d[:level]     Debug Level: ERROR,WARN,INFO,DEBUG,VERBOSE (Default: INFO)" );
+			Log::Info(" -f             Export float tracks");
 			Log::Info(" -n             Disable recursive file processing" );
 			Log::Info(" -v x.x.x.x     Nif Version to write as - Defaults to 20.2.0.7" );
 			Log::Info(" -u x           Nif User Version to write as - Defaults to 12" );
@@ -632,6 +665,9 @@ static bool ExecuteCmd(hkxcmdLine &cmdLine)
 		{
 			switch (tolower(arg[1]))
 			{
+			case 'f':
+				AnimationExport::s_exportFloatTracks = true;
+				break;
 			case 'n':
 				recursion = false;
 				break;
