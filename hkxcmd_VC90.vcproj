@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="hkxcmd"
 	ProjectGUID="{3976526D-2906-443B-B716-95E3915A7CBE}"
 	RootNamespace="hkxcmd"
@@ -44,7 +44,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)Core&quot;;&quot;$(ProjectDir)Compat&quot;;&quot;$(ProjectDir)Loki/include&quot;;&quot;$(ProjectDir)..\vendor\Havok\hk2010_2_0_r1\Source&quot;;&quot;$(ProjectDir)..\niflib\include&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)Core&quot;;&quot;$(ProjectDir)Compat&quot;;&quot;$(ProjectDir)Loki/include&quot;;&quot;$(ProjectDir)..\Havok SDK\2010\Source&quot;;&quot;$(ProjectDir)..\niflib\include&quot;"
 				PreprocessorDefinitions="WIN32;_WIN32_WINNT=0x500;_DEBUG;_CONSOLE;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;USE_NIFLIB_TEMPLATE_HELPERS;NIFLIB_STATIC_LINK"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -69,7 +69,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(ProjectDir)..\vendor\Havok\hk2010_2_0_r1\Lib\win32_net_9-0\debug_multithreaded&quot;;&quot;$(ProjectDir)..\niflib\lib&quot;"
+				AdditionalLibraryDirectories="&quot;$(ProjectDir)..\Havok SDK\2010\Lib\win32_net_9-0\debug_multithreaded&quot;;&quot;$(ProjectDir)..\niflib\vc9\lib&quot;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -125,7 +125,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)Core&quot;;&quot;$(ProjectDir)Compat&quot;;&quot;$(ProjectDir)Loki/include&quot;;&quot;$(ProjectDir)..\vendor\Havok\hk2010_2_0_r1\Source&quot;;&quot;$(ProjectDir)..\niflib\include&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)Core&quot;;&quot;$(ProjectDir)Compat&quot;;&quot;$(ProjectDir)Loki/include&quot;;&quot;$(ProjectDir)..\Havok SDK\2010\Source&quot;;&quot;$(ProjectDir)..\niflib\include&quot;"
 				PreprocessorDefinitions="WIN32;_WIN32_WINNT=0x500;NDEBUG;_CONSOLE;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;USE_NIFLIB_TEMPLATE_HELPERS;NIFLIB_STATIC_LINK"
 				RuntimeLibrary="0"
 				ForceConformanceInForLoopScope="false"
@@ -146,7 +146,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(ProjectDir)..\vendor\Havok\hk2010_2_0_r1\Lib\win32_net_9-0\release_multithreaded&quot;;&quot;$(ProjectDir)..\niflib\lib&quot;"
+				AdditionalLibraryDirectories="&quot;$(ProjectDir)..\Havok SDK\2010\Lib\win32_net_9-0\release_multithreaded&quot;;&quot;$(ProjectDir)..\niflib\vc9\lib&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -1724,13 +1724,6 @@
 					RelativePath=".\compat\BSBoneSwitchGenerator_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -1742,13 +1735,6 @@
 				<File
 					RelativePath=".\compat\BSBoneSwitchGeneratorBoneData_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -1762,13 +1748,6 @@
 					RelativePath=".\compat\BSComputeAddBoneAnimModifier_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -1780,13 +1759,6 @@
 				<File
 					RelativePath=".\compat\BSCyclicBlendTransitionGenerator_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -1800,13 +1772,6 @@
 					RelativePath=".\compat\BSDecomposeVectorModifier_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -1818,13 +1783,6 @@
 				<File
 					RelativePath=".\compat\BSDirectAtModifier_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -1838,13 +1796,6 @@
 					RelativePath=".\compat\BSDistTriggerModifier_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -1856,13 +1807,6 @@
 				<File
 					RelativePath=".\compat\BSEventEveryNEventsModifier_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -1876,13 +1820,6 @@
 					RelativePath=".\compat\BSEventOnDeactivateModifier_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -1894,13 +1831,6 @@
 				<File
 					RelativePath=".\compat\BSEventOnFalseToTrueModifier_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -1914,13 +1844,6 @@
 					RelativePath=".\compat\BSGetTimeStepModifier_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -1932,13 +1855,6 @@
 				<File
 					RelativePath=".\compat\BSInterpValueModifier_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -1952,13 +1868,6 @@
 					RelativePath=".\compat\BSIsActiveModifier_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -1970,13 +1879,6 @@
 				<File
 					RelativePath=".\compat\BSIStateManagerModifier_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -1990,13 +1892,6 @@
 					RelativePath=".\compat\BSIStateManagerModifierBSiStateData_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2008,13 +1903,6 @@
 				<File
 					RelativePath=".\compat\BSIStateManagerModifierBSIStateManagerStateListener_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2028,13 +1916,6 @@
 					RelativePath=".\compat\BSiStateTaggingGenerator_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2046,13 +1927,6 @@
 				<File
 					RelativePath=".\compat\BSLimbIKModifier_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2066,13 +1940,6 @@
 					RelativePath=".\compat\BSLookAtModifier_4.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2084,13 +1951,6 @@
 				<File
 					RelativePath=".\compat\BSLookAtModifierBoneData_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2104,13 +1964,6 @@
 					RelativePath=".\compat\BSModifyOnceModifier_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2123,13 +1976,6 @@
 					RelativePath=".\compat\BSOffsetAnimationGenerator_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2141,13 +1987,6 @@
 				<File
 					RelativePath=".\compat\BSPassByTargetTriggerModifier_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2165,13 +2004,6 @@
 					RelativePath=".\compat\BSSpeedSamplerModifier_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2183,13 +2015,6 @@
 				<File
 					RelativePath=".\compat\BSSynchronizedClipGenerator_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2203,13 +2028,6 @@
 					RelativePath=".\compat\BSTimerModifier_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2221,13 +2039,6 @@
 				<File
 					RelativePath=".\compat\BSTweenerModifier_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2241,13 +2052,6 @@
 					RelativePath=".\compat\hkbAttachmentModifier_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2259,13 +2063,6 @@
 				<File
 					RelativePath=".\compat\hkbAttachmentSetup_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2279,13 +2076,6 @@
 					RelativePath=".\compat\hkbAttributeModifier_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2297,13 +2087,6 @@
 				<File
 					RelativePath=".\compat\hkbAttributeModifierAssignment_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2317,13 +2100,6 @@
 					RelativePath=".\compat\hkbAuxiliaryNodeInfo_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2335,13 +2111,6 @@
 				<File
 					RelativePath=".\compat\hkbBehaviorEventsInfo_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2355,13 +2124,6 @@
 					RelativePath=".\compat\hkbBehaviorGraph_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2373,13 +2135,6 @@
 				<File
 					RelativePath=".\compat\hkbBehaviorGraphData_2.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2393,13 +2148,6 @@
 					RelativePath=".\compat\hkbBehaviorGraphInternalState_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2411,13 +2159,6 @@
 				<File
 					RelativePath=".\compat\hkbBehaviorGraphInternalStateInfo_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2431,13 +2172,6 @@
 					RelativePath=".\compat\hkbBehaviorGraphStringData_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2449,13 +2183,6 @@
 				<File
 					RelativePath=".\compat\hkbBehaviorInfo_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2469,13 +2196,6 @@
 					RelativePath=".\compat\hkbBehaviorInfoIdToNamePair_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2487,13 +2207,6 @@
 				<File
 					RelativePath=".\compat\hkbBehaviorReferenceGenerator_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2507,13 +2220,6 @@
 					RelativePath=".\compat\hkbBindable_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2525,13 +2231,6 @@
 				<File
 					RelativePath=".\compat\hkbBlendCurveUtils_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2545,13 +2244,6 @@
 					RelativePath=".\compat\hkbBlenderGenerator_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2563,13 +2255,6 @@
 				<File
 					RelativePath=".\compat\hkbBlenderGeneratorChild_2.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2583,13 +2268,6 @@
 					RelativePath=".\compat\hkbBlenderGeneratorChildInternalState_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2601,13 +2279,6 @@
 				<File
 					RelativePath=".\compat\hkbBlenderGeneratorInternalState_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2621,13 +2292,6 @@
 					RelativePath=".\compat\hkbBlendingTransitionEffect_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2639,13 +2303,6 @@
 				<File
 					RelativePath=".\compat\hkbBlendingTransitionEffectInternalState_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2659,13 +2316,6 @@
 					RelativePath=".\compat\hkbBoneIndexArray_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2677,13 +2327,6 @@
 				<File
 					RelativePath=".\compat\hkbBoneWeightArray_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2697,13 +2340,6 @@
 					RelativePath=".\compat\hkbBoolVariableSequencedData_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2715,13 +2351,6 @@
 				<File
 					RelativePath=".\compat\hkbBoolVariableSequencedDataSample_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2735,13 +2364,6 @@
 					RelativePath=".\compat\hkbCameraShakeEventPayload_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2753,13 +2375,6 @@
 				<File
 					RelativePath=".\compat\hkbCharacter_2.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2773,13 +2388,6 @@
 					RelativePath=".\compat\hkbCharacterAddedInfo_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2791,13 +2399,6 @@
 				<File
 					RelativePath=".\compat\hkbCharacterControlCommand_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2811,13 +2412,6 @@
 					RelativePath=".\compat\hkbCharacterControllerControlData_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2829,13 +2423,6 @@
 				<File
 					RelativePath=".\compat\hkbCharacterControllerModifier_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2849,13 +2436,6 @@
 					RelativePath=".\compat\hkbCharacterControllerModifierInternalState_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2867,13 +2447,6 @@
 				<File
 					RelativePath=".\compat\hkbCharacterData_7.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2887,13 +2460,6 @@
 					RelativePath=".\compat\hkbCharacterDataCharacterControllerInfo_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2905,13 +2471,6 @@
 				<File
 					RelativePath=".\compat\hkbCharacterInfo_2.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2925,13 +2484,6 @@
 					RelativePath=".\compat\hkbCharacterSetup_2.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2943,13 +2495,6 @@
 				<File
 					RelativePath=".\compat\hkbCharacterSkinInfo_2.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -2963,13 +2508,6 @@
 					RelativePath=".\compat\hkbCharacterSteppedInfo_2.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -2981,13 +2519,6 @@
 				<File
 					RelativePath=".\compat\hkbCharacterStringData_5.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3001,13 +2532,6 @@
 					RelativePath=".\compat\hkbClientCharacterState_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3019,13 +2543,6 @@
 				<File
 					RelativePath=".\compat\hkbClipGenerator_2.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3039,13 +2556,6 @@
 					RelativePath=".\compat\hkbClipGeneratorEcho_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3057,13 +2567,6 @@
 				<File
 					RelativePath=".\compat\hkbClipGeneratorInternalState_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3077,13 +2580,6 @@
 					RelativePath=".\compat\hkbClipTrigger_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3095,13 +2591,6 @@
 				<File
 					RelativePath=".\compat\hkbClipTriggerArray_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3115,13 +2604,6 @@
 					RelativePath=".\compat\hkbCombineTransformsModifier_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3133,13 +2615,6 @@
 				<File
 					RelativePath=".\compat\hkbCombineTransformsModifierInternalState_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3153,13 +2628,6 @@
 					RelativePath=".\compat\hkbCompiledExpressionSet_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3171,13 +2639,6 @@
 				<File
 					RelativePath=".\compat\hkbCompiledExpressionSetToken_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3191,13 +2652,6 @@
 					RelativePath=".\compat\hkbComputeDirectionModifier_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3209,13 +2663,6 @@
 				<File
 					RelativePath=".\compat\hkbComputeDirectionModifierInternalState_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3229,13 +2676,6 @@
 					RelativePath=".\compat\hkbComputeRotationFromAxisAngleModifier_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3247,13 +2687,6 @@
 				<File
 					RelativePath=".\compat\hkbComputeRotationFromAxisAngleModifierInternalState_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3267,13 +2700,6 @@
 					RelativePath=".\compat\hkbComputeRotationToTargetModifier_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3285,13 +2711,6 @@
 				<File
 					RelativePath=".\compat\hkbComputeRotationToTargetModifierInternalState_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3305,13 +2724,6 @@
 					RelativePath=".\compat\hkbCondition_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3323,13 +2735,6 @@
 				<File
 					RelativePath=".\compat\hkbContext_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3343,13 +2748,6 @@
 					RelativePath=".\compat\hkbDampingModifier_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3361,13 +2759,6 @@
 				<File
 					RelativePath=".\compat\hkbDampingModifierInternalState_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3381,13 +2772,6 @@
 					RelativePath=".\compat\hkbDefaultMessageLog_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3399,13 +2783,6 @@
 				<File
 					RelativePath=".\compat\hkbDelayedModifier_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3419,13 +2796,6 @@
 					RelativePath=".\compat\hkbDelayedModifierInternalState_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3437,13 +2807,6 @@
 				<File
 					RelativePath=".\compat\hkbDetectCloseToGroundModifier_2.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3457,13 +2820,6 @@
 					RelativePath=".\compat\hkbDetectCloseToGroundModifierInternalState_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3475,13 +2831,6 @@
 				<File
 					RelativePath=".\compat\hkbEvaluateExpressionModifier_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3495,13 +2844,6 @@
 					RelativePath=".\compat\hkbEvaluateExpressionModifierInternalExpressionData_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3513,13 +2855,6 @@
 				<File
 					RelativePath=".\compat\hkbEvaluateExpressionModifierInternalState_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3533,13 +2868,6 @@
 					RelativePath=".\compat\hkbEvaluateHandleModifier_2.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3551,13 +2879,6 @@
 				<File
 					RelativePath=".\compat\hkbEvent_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3571,13 +2892,6 @@
 					RelativePath=".\compat\hkbEventBase_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3589,13 +2903,6 @@
 				<File
 					RelativePath=".\compat\hkbEventDrivenModifier_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3609,13 +2916,6 @@
 					RelativePath=".\compat\hkbEventDrivenModifierInternalState_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3627,13 +2927,6 @@
 				<File
 					RelativePath=".\compat\hkbEventInfo_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3647,13 +2940,6 @@
 					RelativePath=".\compat\hkbEventPayload_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3665,13 +2951,6 @@
 				<File
 					RelativePath=".\compat\hkbEventPayloadList_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3685,13 +2964,6 @@
 					RelativePath=".\compat\hkbEventProperty_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3703,13 +2975,6 @@
 				<File
 					RelativePath=".\compat\hkbEventRaisedInfo_2.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3723,13 +2988,6 @@
 					RelativePath=".\compat\hkbEventRangeData_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3741,13 +2999,6 @@
 				<File
 					RelativePath=".\compat\hkbEventRangeDataArray_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3761,13 +3012,6 @@
 					RelativePath=".\compat\hkbEventSequencedData_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3779,13 +3023,6 @@
 				<File
 					RelativePath=".\compat\hkbEventSequencedDataSequencedEvent_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3799,13 +3036,6 @@
 					RelativePath=".\compat\hkbEventsFromRangeModifier_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3817,13 +3047,6 @@
 				<File
 					RelativePath=".\compat\hkbEventsFromRangeModifierInternalState_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3837,13 +3060,6 @@
 					RelativePath=".\compat\hkbExpressionCondition_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3855,13 +3071,6 @@
 				<File
 					RelativePath=".\compat\hkbExpressionData_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3875,13 +3084,6 @@
 					RelativePath=".\compat\hkbExpressionDataArray_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3893,13 +3095,6 @@
 				<File
 					RelativePath=".\compat\hkbExtractRagdollPoseModifier_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3913,13 +3108,6 @@
 					RelativePath=".\compat\hkbFootIkControlData_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3931,13 +3119,6 @@
 				<File
 					RelativePath=".\compat\hkbFootIkControlsModifier_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3951,13 +3132,6 @@
 					RelativePath=".\compat\hkbFootIkControlsModifierLeg_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -3969,13 +3143,6 @@
 				<File
 					RelativePath=".\compat\hkbFootIkDriverInfo_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -3989,13 +3156,6 @@
 					RelativePath=".\compat\hkbFootIkDriverInfoLeg_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4007,13 +3167,6 @@
 				<File
 					RelativePath=".\compat\hkbFootIkGains_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4027,13 +3180,6 @@
 					RelativePath=".\compat\hkbFootIkModifier_3.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4045,13 +3191,6 @@
 				<File
 					RelativePath=".\compat\hkbFootIkModifierInternalLegData_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4065,13 +3204,6 @@
 					RelativePath=".\compat\hkbFootIkModifierLeg_2.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4083,13 +3215,6 @@
 				<File
 					RelativePath=".\compat\hkbGenerator_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4103,13 +3228,6 @@
 					RelativePath=".\compat\hkbGeneratorOutputListener_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4121,13 +3239,6 @@
 				<File
 					RelativePath=".\compat\hkbGeneratorSyncInfo_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4141,13 +3252,6 @@
 					RelativePath=".\compat\hkbGeneratorSyncInfoSyncPoint_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4159,13 +3263,6 @@
 				<File
 					RelativePath=".\compat\hkbGeneratorTransitionEffect_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4179,13 +3276,6 @@
 					RelativePath=".\compat\hkbGeneratorTransitionEffectInternalState_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4197,13 +3287,6 @@
 				<File
 					RelativePath=".\compat\hkbGetHandleOnBoneModifier_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4217,13 +3300,6 @@
 					RelativePath=".\compat\hkbGetUpModifier_2.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4235,13 +3311,6 @@
 				<File
 					RelativePath=".\compat\hkbGetUpModifierInternalState_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4255,13 +3324,6 @@
 					RelativePath=".\compat\hkbGetWorldFromModelModifier_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4273,13 +3335,6 @@
 				<File
 					RelativePath=".\compat\hkbGetWorldFromModelModifierInternalState_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4293,13 +3348,6 @@
 					RelativePath=".\compat\hkbHandIkControlData_2.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4312,13 +3360,6 @@
 					RelativePath=".\compat\hkbHandIkControlsModifier_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4330,13 +3371,6 @@
 				<File
 					RelativePath=".\compat\hkbHandIkControlsModifierHand_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4354,13 +3388,6 @@
 					RelativePath=".\compat\hkbHandIkDriverInfoHand_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4372,13 +3399,6 @@
 				<File
 					RelativePath=".\compat\hkbHandIkModifier_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4392,13 +3412,6 @@
 					RelativePath=".\compat\hkbHandIkModifierHand_3.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4410,13 +3423,6 @@
 				<File
 					RelativePath=".\compat\hkbHandle_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4430,13 +3436,6 @@
 					RelativePath=".\compat\hkbIntEventPayload_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4448,13 +3447,6 @@
 				<File
 					RelativePath=".\compat\hkbIntVariableSequencedData_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4468,13 +3460,6 @@
 					RelativePath=".\compat\hkbIntVariableSequencedDataSample_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4486,13 +3471,6 @@
 				<File
 					RelativePath=".\compat\hkbKeyframeBonesModifier_3.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4506,13 +3484,6 @@
 					RelativePath=".\compat\hkbKeyframeBonesModifierKeyframeInfo_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4524,13 +3495,6 @@
 				<File
 					RelativePath=".\compat\hkbLinkedSymbolInfo_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4544,13 +3508,6 @@
 					RelativePath=".\compat\hkbLookAtModifier_3.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4562,13 +3519,6 @@
 				<File
 					RelativePath=".\compat\hkbLookAtModifierInternalState_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4582,13 +3532,6 @@
 					RelativePath=".\compat\hkbManualSelectorGenerator_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4600,13 +3543,6 @@
 				<File
 					RelativePath=".\compat\hkbManualSelectorGeneratorInternalState_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4620,13 +3556,6 @@
 					RelativePath=".\compat\hkbMessageLog_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4638,13 +3567,6 @@
 				<File
 					RelativePath=".\compat\hkbMirroredSkeletonInfo_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4658,13 +3580,6 @@
 					RelativePath=".\compat\hkbMirrorModifier_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4676,13 +3591,6 @@
 				<File
 					RelativePath=".\compat\hkbModifier_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4696,13 +3604,6 @@
 					RelativePath=".\compat\hkbModifierGenerator_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4714,13 +3615,6 @@
 				<File
 					RelativePath=".\compat\hkbModifierList_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4734,13 +3628,6 @@
 					RelativePath=".\compat\hkbModifierWrapper_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4752,13 +3639,6 @@
 				<File
 					RelativePath=".\compat\hkbMoveCharacterModifier_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4772,13 +3652,6 @@
 					RelativePath=".\compat\hkbMoveCharacterModifierInternalState_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4790,13 +3663,6 @@
 				<File
 					RelativePath=".\compat\hkbNamedEventPayload_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4810,13 +3676,6 @@
 					RelativePath=".\compat\hkbNamedIntEventPayload_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4828,13 +3687,6 @@
 				<File
 					RelativePath=".\compat\hkbNamedRealEventPayload_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4848,13 +3700,6 @@
 					RelativePath=".\compat\hkbNamedStringEventPayload_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4866,13 +3711,6 @@
 				<File
 					RelativePath=".\compat\hkbNode_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4886,13 +3724,6 @@
 					RelativePath=".\compat\hkbNodeInternalStateInfo_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4904,13 +3735,6 @@
 				<File
 					RelativePath=".\compat\hkbParticleSystemEventPayload_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4924,13 +3748,6 @@
 					RelativePath=".\compat\hkbPoseMatchingGenerator_2.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4942,13 +3759,6 @@
 				<File
 					RelativePath=".\compat\hkbPoseMatchingGeneratorInternalState_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -4962,13 +3772,6 @@
 					RelativePath=".\compat\hkbPoweredRagdollControlData_3.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -4980,13 +3783,6 @@
 				<File
 					RelativePath=".\compat\hkbPoweredRagdollControlsModifier_5.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5000,13 +3796,6 @@
 					RelativePath=".\compat\hkbProjectData_2.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5018,13 +3807,6 @@
 				<File
 					RelativePath=".\compat\hkbProjectStringData_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5038,13 +3820,6 @@
 					RelativePath=".\compat\hkbProxyModifier_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5056,13 +3831,6 @@
 				<File
 					RelativePath=".\compat\hkbProxyModifierProxyInfo_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5076,13 +3844,6 @@
 					RelativePath=".\compat\hkbRaiseEventCommand_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5094,13 +3855,6 @@
 				<File
 					RelativePath=".\compat\hkbRealEventPayload_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5114,13 +3868,6 @@
 					RelativePath=".\compat\hkbRealVariableSequencedData_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5132,13 +3879,6 @@
 				<File
 					RelativePath=".\compat\hkbRealVariableSequencedDataSample_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5152,13 +3892,6 @@
 					RelativePath=".\compat\hkbReferencePoseGenerator_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5170,13 +3903,6 @@
 				<File
 					RelativePath=".\compat\hkbRegisteredGenerator_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5190,13 +3916,6 @@
 					RelativePath=".\compat\hkbRigidBodyRagdollControlData_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5208,13 +3927,6 @@
 				<File
 					RelativePath=".\compat\hkbRigidBodyRagdollControlsModifier_3.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5228,13 +3940,6 @@
 					RelativePath=".\compat\hkbRoleAttribute_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5246,13 +3951,6 @@
 				<File
 					RelativePath=".\compat\hkbRotateCharacterModifier_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5266,13 +3964,6 @@
 					RelativePath=".\compat\hkbRotateCharacterModifierInternalState_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5284,13 +3975,6 @@
 				<File
 					RelativePath=".\compat\hkbSenseHandleModifier_2.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5304,13 +3988,6 @@
 					RelativePath=".\compat\hkbSenseHandleModifierRange_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5322,13 +3999,6 @@
 				<File
 					RelativePath=".\compat\hkbSequence_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5342,13 +4012,6 @@
 					RelativePath=".\compat\hkbSequencedData_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5360,13 +4023,6 @@
 				<File
 					RelativePath=".\compat\hkbSequenceInternalState_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5380,13 +4036,6 @@
 					RelativePath=".\compat\hkbSequenceStringData_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5398,13 +4047,6 @@
 				<File
 					RelativePath=".\compat\hkbSetBehaviorCommand_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5418,13 +4060,6 @@
 					RelativePath=".\compat\hkbSetLocalTimeOfClipGeneratorCommand_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5436,13 +4071,6 @@
 				<File
 					RelativePath=".\compat\hkbSetNodePropertyCommand_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5456,13 +4084,6 @@
 					RelativePath=".\compat\hkbSetWordVariableCommand_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5474,13 +4095,6 @@
 				<File
 					RelativePath=".\compat\hkbSetWorldFromModelModifier_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5494,13 +4108,6 @@
 					RelativePath=".\compat\hkbSimulationControlCommand_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5512,13 +4119,6 @@
 				<File
 					RelativePath=".\compat\hkbSimulationStateInfo_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5532,13 +4132,6 @@
 					RelativePath=".\compat\hkbStateChooser_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5550,13 +4143,6 @@
 				<File
 					RelativePath=".\compat\hkbStateListener_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5570,13 +4156,6 @@
 					RelativePath=".\compat\hkbStateMachine_4.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5588,13 +4167,6 @@
 				<File
 					RelativePath=".\compat\hkbStateMachineActiveTransitionInfo_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5608,13 +4180,6 @@
 					RelativePath=".\compat\hkbStateMachineDelayedTransitionInfo_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5626,13 +4191,6 @@
 				<File
 					RelativePath=".\compat\hkbStateMachineEventPropertyArray_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5646,13 +4204,6 @@
 					RelativePath=".\compat\hkbStateMachineInternalState_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5664,13 +4215,6 @@
 				<File
 					RelativePath=".\compat\hkbStateMachineNestedStateMachineData_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5684,13 +4228,6 @@
 					RelativePath=".\compat\hkbStateMachineProspectiveTransitionInfo_2.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5702,13 +4239,6 @@
 				<File
 					RelativePath=".\compat\hkbStateMachineStateInfo_4.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5722,13 +4252,6 @@
 					RelativePath=".\compat\hkbStateMachineTimeInterval_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5740,13 +4263,6 @@
 				<File
 					RelativePath=".\compat\hkbStateMachineTransitionInfo_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5760,13 +4276,6 @@
 					RelativePath=".\compat\hkbStateMachineTransitionInfoArray_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5778,13 +4287,6 @@
 				<File
 					RelativePath=".\compat\hkbStateMachineTransitionInfoReference_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5798,13 +4300,6 @@
 					RelativePath=".\compat\hkbStringCondition_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5816,13 +4311,6 @@
 				<File
 					RelativePath=".\compat\hkbStringEventPayload_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5836,13 +4324,6 @@
 					RelativePath=".\compat\hkbTestStateChooser_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5854,13 +4335,6 @@
 				<File
 					RelativePath=".\compat\hkbTimerModifier_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5874,13 +4348,6 @@
 					RelativePath=".\compat\hkbTimerModifierInternalState_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5892,13 +4359,6 @@
 				<File
 					RelativePath=".\compat\hkbTransformVectorModifier_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5912,13 +4372,6 @@
 					RelativePath=".\compat\hkbTransformVectorModifierInternalState_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5930,13 +4383,6 @@
 				<File
 					RelativePath=".\compat\hkbTransitionEffect_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5950,13 +4396,6 @@
 					RelativePath=".\compat\hkbTwistModifier_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -5968,13 +4407,6 @@
 				<File
 					RelativePath=".\compat\hkbVariableBindingSet_2.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -5988,13 +4420,6 @@
 					RelativePath=".\compat\hkbVariableBindingSetBinding_1.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -6006,13 +4431,6 @@
 				<File
 					RelativePath=".\compat\hkbVariableInfo_1.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -6026,13 +4444,6 @@
 					RelativePath=".\compat\hkbVariableValue_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -6044,13 +4455,6 @@
 				<File
 					RelativePath=".\compat\hkbVariableValueSet_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
@@ -6064,13 +4468,6 @@
 					RelativePath=".\compat\hkbWorldEnums_0.cpp"
 					>
 					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
@@ -6082,13 +4479,6 @@
 				<File
 					RelativePath=".\compat\hkbWorldFromModelModeData_0.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
