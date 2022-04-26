@@ -575,27 +575,23 @@ static void SetIpltdScale(hkArray<hkQsTransform>& transforms, int frame, int str
 	SetTransformScale(transforms[frame * stride + offset], S);
 }
 
-
 bool AnimationExport::exportController()
 {
-	vector<Niflib::ControllerLink> blocks = seq->GetControlledBlocks();
+	//Map bones
+	std::map<std::string, int, ltstr> boneMap;
 	int nbones = skeleton->m_bones.getSize();
-
-   if (AnimationExport::noRootSiblings)
-   {
-	   // Remove bones not children of root.  This is a bit of a kludge.  
-	   //  Basically search for the first node after the root which also has no parent
-	   //  This is typically Camera3. We then truncate tracks to exclude nodes appearing after.
-	   for (int i=1; i<nbones; ++i)
-	   {
-		   if (skeleton->m_parentIndices[i] < 0)
-		   {
-			   nbones = i;
-			   break;
-		   }
-	   }
-   }
-	int numTracks = nbones;
+	for (int i = 0; i < nbones; i++)
+	{
+		std::string name = skeleton->m_bones[i].m_name;
+		boneMap[name] = i;
+	}
+	
+	//Include all bones 
+	//(Skyrim seems to keep all bones in all animations, unless they are additive. We might want an option for this)
+	int nTransforms = nbones;
+	//to prepare for generalising this to limited sets of bones, store a mapping of track index to bone index:
+	std::vector<int> trackToBone(nTransforms);
+	for (int i = 0; i < nTransforms; i++) { trackToBone[i] = i; }
 
 	float duration = seq->GetStopTime() - seq->GetStartTime();
 	int nframes = (int)roundf(duration / FramesIncrement) + 1;
@@ -605,75 +601,67 @@ bool AnimationExport::exportController()
 
 	hkRefPtr<hkaInterleavedUncompressedAnimation> tempAnim = new hkaInterleavedUncompressedAnimation();
 	tempAnim->m_duration = duration;
-	tempAnim->m_numberOfTransformTracks = numTracks;
+	tempAnim->m_numberOfTransformTracks = nTransforms;
 	tempAnim->m_numberOfFloatTracks = 0;//anim->m_numberOfFloatTracks;
-	tempAnim->m_transforms.setSize(numTracks*nframes, hkQsTransform::getIdentity());
+	tempAnim->m_transforms.setSize(nTransforms*nframes, hkQsTransform::getIdentity());
 	tempAnim->m_floats.setSize(tempAnim->m_numberOfFloatTracks);
-	tempAnim->m_annotationTracks.setSize(numTracks);
+	tempAnim->m_annotationTracks.setSize(nTransforms);
 
 	hkArray<hkQsTransform>& transforms = tempAnim->m_transforms;
 
-	typedef map<string, int, ltstr> StringIntMap;
-	StringIntMap boneMap;
-	for (int i=0; i<nbones; ++i)
-	{
-		string name = skeleton->m_bones[i].m_name;
-		boneMap[name] = i;
+	//prefill with bind pose, in case some tracks are missing
+	for (int i = 0; i < nTransforms; i++) {
+		int boneIdx = trackToBone[i];
+		FillTransforms(transforms, boneIdx, nTransforms, skeleton->m_referencePose[boneIdx]);
 	}
 
-	for ( vector<Niflib::ControllerLink>::iterator bitr = blocks.begin(); bitr != blocks.end(); ++bitr)
-	{
-		StringIntMap::iterator boneitr = boneMap.find((*bitr).nodeName);
-		if (boneitr == boneMap.end())
-		{
-			Log::Warn("Unknown bone '%s' found in animation. Skipping.", (*bitr).nodeName.c_str());
-			continue;
-		}
+	vector<Niflib::ControllerLink> blocks = seq->GetControlledBlocks();
+	for (std::vector<Niflib::ControllerLink>::iterator it = blocks.begin(); it != blocks.end(); ++it) {
+		//Only look at transform blocks
+		if (it->interpolator && it->interpolator->IsSameType(Niflib::NiTransformInterpolator::TYPE)) {
+			std::map<std::string, int, ltstr>::iterator boneitr = boneMap.find(it->nodeName);
+			if (boneitr != boneMap.end()) {
 
-		int boneIdx = boneitr->second;
-		hkQsTransform localTransform = skeleton->m_referencePose[boneIdx];
+				Niflib::NiTransformInterpolatorRef interpolator = 
+					Niflib::StaticCast<Niflib::NiTransformInterpolator>(it->interpolator);//we already checked
+				if (Niflib::NiTransformDataRef data = interpolator->GetData()) {
 
-		FillTransforms(transforms, boneIdx, nbones, localTransform); // prefill transforms with bindpose
+					int boneIdx = boneitr->second;
 
-		if ( NiTransformInterpolatorRef interpolator = DynamicCast<NiTransformInterpolator>((*bitr).interpolator) )
-		{
-			if (NiTransformDataRef data = interpolator->GetData())
-			{
-				vector<Vector3Key> tKeys = data->GetTranslateKeys();
-				if (!tKeys.empty()) {
-					Niflib::KeyType keyType = data->GetTranslateType();
-					int keyHint = 0;
-					for (int i = 0; i < nframes; i++) {
-						SetIpltdTranslation(transforms, i, nbones, boneIdx, tKeys, keyType, keyHint);
+					vector<Vector3Key> tKeys = data->GetTranslateKeys();
+					if (!tKeys.empty()) {
+						Niflib::KeyType keyType = data->GetTranslateType();
+						int keyHint = 0;
+						for (int i = 0; i < nframes; i++) {
+							SetIpltdTranslation(transforms, i, nbones, boneIdx, tKeys, keyType, keyHint);
+						}
+					}
+
+					vector<QuatKey> rKeys = data->GetQuatRotateKeys();
+					if (!rKeys.empty()) {
+						Niflib::KeyType keyType = data->GetRotateType();
+						int keyHint = 0;
+						for (int i = 0; i < nframes; i++) {
+							SetIpltdRotation(transforms, i, nbones, boneIdx, rKeys, keyType, keyHint);
+						}
+					}
+
+					vector<FloatKey> sKeys = data->GetScaleKeys();
+					if (!sKeys.empty()) {
+						Niflib::KeyType keyType = data->GetScaleType();
+						int keyHint = 0;
+						for (int i = 0; i < nframes; i++) {
+							SetIpltdScale(transforms, i, nbones, boneIdx, sKeys, keyType, keyHint);
+						}
 					}
 				}
-
-				vector<QuatKey> rKeys = data->GetQuatRotateKeys();
-				if (!rKeys.empty()) {
-					Niflib::KeyType keyType = data->GetRotateType();
-					int keyHint = 0;
-					for (int i = 0; i < nframes; i++) {
-						SetIpltdRotation(transforms, i, nbones, boneIdx, rKeys, keyType, keyHint);
-					}
-				}
-
-				vector<FloatKey> sKeys = data->GetScaleKeys();
-				if (!sKeys.empty()) {
-					Niflib::KeyType keyType = data->GetScaleType();
-					int keyHint = 0;
-					for (int i = 0; i < nframes; i++) {
-						SetIpltdScale(transforms, i, nbones, boneIdx, sKeys, keyType, keyHint);
-					}
+				else {
+					//Use the interpolator value?
 				}
 			}
-			else
-			{
-
+			else {
+				Log::Warn("Unknown bone '%s' found in animation. Skipping.", it->nodeName.c_str());
 			}
-		}
-		else
-		{
-
 		}
 	}
 
