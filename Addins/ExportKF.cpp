@@ -374,7 +374,10 @@ bool AnimationExport::exportController()
 
 			QuatKey qk;
 			qk.time = time;
-			qk.data = TOQUAT(transform.getRotation()).Normalized();
+			//Did they remove the function to normalise quats? Who cares, just do it ourselves.
+			Niflib::Quaternion quat = TOQUAT(transform.getRotation());
+			float norm = std::sqrt(quat.Dot(quat));
+			qk.data = quat * (1.0f / norm);
 			if (!EQUALS(qk.data,data.lastRotate))
 			{
 				data.rot.push_back(qk);

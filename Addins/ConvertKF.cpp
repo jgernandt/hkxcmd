@@ -716,11 +716,15 @@ static void ExportAnimations(const string& rootdir, const string& skelfile
 			PathRelativePathTo(relout, workdir, FILE_ATTRIBUTE_DIRECTORY, outfile, 0);
 
 			Log::Verbose("ExportAnimation Reading '%s'", animfile.c_str());
+			
+			//Can we disable exceptions in current Niflib? Just catch all and move on.
+			vector<NiControllerSequenceRef> blocks;
+			try {
+				blocks = DynamicCast<NiControllerSequence>(Niflib::ReadNifList(animfile, NULL));
+			}
+			catch (...) {
 
-
-			Niflib::NifOptions options;
-			options.exceptionOnErrors = false;
-			vector<NiControllerSequenceRef> blocks = DynamicCast<NiControllerSequence>(Niflib::ReadNifList(animfile, NULL, &options));
+			}
 
 			int nbindings = blocks.size();
 			if ( nbindings == 0)
