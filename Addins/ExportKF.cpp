@@ -373,13 +373,28 @@ bool AnimationExport::exportController()
 	//Add transform tracks
 	for (int i = 0; i < numTracks; i++) {
 		Niflib::NiTransformInterpolatorRef iplr = new Niflib::NiTransformInterpolator;
-		//Initialise iplr value to bind pose (doesn't matter, but nice for reference)
-		Niflib::Vector3 refT = TOVECTOR3(skeleton->m_referencePose[i].getTranslation());
-		Niflib::Quaternion refR = TOQUAT(skeleton->m_referencePose[i].getRotation());
-		Niflib::Vector3 refS = TOVECTOR3(skeleton->m_referencePose[i].getScale());
+		
+		//Our reference pose
+		Niflib::Vector3 refT;
+		Niflib::Quaternion refR;
+		float refS;
+		if (binding->m_blendHint == hkaAnimationBinding::NORMAL) {
+			//Bind pose
+			refT = TOVECTOR3(skeleton->m_referencePose[i].getTranslation());
+			refR = TOQUAT(skeleton->m_referencePose[i].getRotation());
+			refS = TOVECTOR3(skeleton->m_referencePose[i].getScale()).x;
+		}
+		else if (binding->m_blendHint == hkaAnimationBinding::ADDITIVE) {
+			//Identity
+			refT = Niflib::Vector3(0.0f, 0.0f, 0.0f);
+			refR = Niflib::Quaternion(1.0f, 0.0f, 0.0f, 0.0f);
+			refS = 1.0f;
+		}
+
+		//Initialise iplr value to the ref pose (doesn't matter, but nice for reference)
 		iplr->SetTranslation(refT);
 		iplr->SetRotation(refR);
-		iplr->SetScale(refS.x);
+		iplr->SetScale(refS);
 
 		iplr->SetData(new Niflib::NiTransformData);
 
@@ -388,7 +403,7 @@ bool AnimationExport::exportController()
 		iplr->GetData()->SetRotateType(Niflib::QUADRATIC_KEY);
 		iplr->GetData()->SetScaleType(Niflib::LINEAR_KEY);
 
-		//if always at bind pose, keep only a single key
+		//if always at ref pose, keep only a single key
 		int j;
 		for (j = 0; j < tKeys[i].size() && EQUALS(tKeys[i][j].data, refT); j++) {}
 		if (j == tKeys[i].size())
@@ -400,7 +415,7 @@ bool AnimationExport::exportController()
 			rKeys[i].resize(1);
 		iplr->GetData()->SetQuatRotateKeys(rKeys[i]);
 
-		for (j = 0; j < sKeys[i].size() && EQUALS(sKeys[i][j].data, refS.x); j++) {}
+		for (j = 0; j < sKeys[i].size() && EQUALS(sKeys[i][j].data, refS); j++) {}
 		if (j == sKeys[i].size())
 			sKeys[i].resize(1);
 		iplr->GetData()->SetScaleKeys(sKeys[i]);

@@ -180,27 +180,29 @@ static void HelpString(hkxcmd::HelpType type){
 			Log::Info("<Switches>" );
 			Log::Info(" -d[:level]     Debug Level: ERROR,WARN,INFO,DEBUG,VERBOSE (Default: INFO)" );
 			Log::Info("");
-         Log::Info(" -v:<flags>     Havok Save Options");
-         Log::Info("    DEFAULT     Save as Default Format (MSVC Win32 Packed)");
-         Log::Info("    XML         Save as Packed Binary Xml Format");
-         Log::Info("    WIN32       Save as Win32 Format");
-         Log::Info("    AMD64       Save as AMD64 Format");
-         Log::Info("    XBOX        Save as XBOX Format");
-         Log::Info("    XBOX360     Save as XBOX360 Format");
-         Log::Info("    TAGFILE     Save as TagFile Format");
-         Log::Info("    TAGXML      Save as TagFile XML Format");
-         Log::Info("");
-         Log::Info(" -f <flags>         Havok saving flags (Defaults:  SAVE_TEXT_FORMAT|SAVE_TEXT_NUMBERS)");
-         Log::Info("     SAVE_DEFAULT           = All flags default to OFF, enable whichever are needed");
-         Log::Info("     SAVE_TEXT_FORMAT       = Use text (usually XML) format, default is binary format if available.");
-         Log::Info("     SAVE_SERIALIZE_IGNORED_MEMBERS = Write members which are usually ignored.");
-         Log::Info("     SAVE_WRITE_ATTRIBUTES  = Include extended attributes in metadata, default is to write minimum metadata.");
-         Log::Info("     SAVE_CONCISE           = Doesn't provide any extra information which would make the file easier to interpret. ");
-         Log::Info("                              E.g. additionally write hex floats as text comments.");
-         Log::Info("     SAVE_TEXT_NUMBERS      = Floating point numbers output as text, not as binary.  ");
-         Log::Info("                              Makes them easily readable/editable, but values may not be exact.");
-         Log::Info("");
+			Log::Info(" -v:<flags>     Havok Save Options");
+			Log::Info("    DEFAULT     Save as Default Format (MSVC Win32 Packed)");
+			Log::Info("    XML         Save as Packed Binary Xml Format");
+			Log::Info("    WIN32       Save as Win32 Format");
+			Log::Info("    AMD64       Save as AMD64 Format");
+			Log::Info("    XBOX        Save as XBOX Format");
+			Log::Info("    XBOX360     Save as XBOX360 Format");
+			Log::Info("    TAGFILE     Save as TagFile Format");
+			Log::Info("    TAGXML      Save as TagFile XML Format");
+			Log::Info("");
+			Log::Info(" -f <flags>         Havok saving flags (Defaults:  SAVE_TEXT_FORMAT|SAVE_TEXT_NUMBERS)");
+			Log::Info("     SAVE_DEFAULT           = All flags default to OFF, enable whichever are needed");
+			Log::Info("     SAVE_TEXT_FORMAT       = Use text (usually XML) format, default is binary format if available.");
+			Log::Info("     SAVE_SERIALIZE_IGNORED_MEMBERS = Write members which are usually ignored.");
+			Log::Info("     SAVE_WRITE_ATTRIBUTES  = Include extended attributes in metadata, default is to write minimum metadata.");
+			Log::Info("     SAVE_CONCISE           = Doesn't provide any extra information which would make the file easier to interpret. ");
+			Log::Info("                              E.g. additionally write hex floats as text comments.");
+			Log::Info("     SAVE_TEXT_NUMBERS      = Floating point numbers output as text, not as binary.  ");
+			Log::Info("                              Makes them easily readable/editable, but values may not be exact.");
+			Log::Info("");
 			Log::Info(" -n             Disable recursive file processing" );
+			Log::Info("");
+			Log::Info(" -a             Treat as ADDITIVE animation" );
 			Log::Info("");
 		}
 		break;
@@ -265,9 +267,12 @@ struct AnimationExport
 	NiControllerSequenceRef seq;
 	hkRefPtr<hkaAnimationBinding> binding;
 	hkRefPtr<hkaSkeleton> skeleton;
-   static bool noRootSiblings;
+
+	static bool noRootSiblings;
+	static bool s_additiveBlend;
 };
 bool AnimationExport::noRootSiblings = true;
+bool AnimationExport::s_additiveBlend = false;
 }
 
 AnimationExport::AnimationExport(NiControllerSequenceRef seq, hkRefPtr<hkaSkeleton> skeleton, hkRefPtr<hkaAnimationBinding> binding)
@@ -577,27 +582,45 @@ static void SetIpltdScale(hkArray<hkQsTransform>& transforms, int frame, int str
 
 bool AnimationExport::exportController()
 {
+	if (s_additiveBlend)
+		binding->m_blendHint = hkaAnimationBinding::ADDITIVE;
+
 	//Map bones
 	std::map<std::string, int, ltstr> boneMap;
 	int nbones = skeleton->m_bones.getSize();
-	for (int i = 0; i < nbones; i++)
-	{
+	for (int i = 0; i < nbones; i++) {
 		std::string name = skeleton->m_bones[i].m_name;
 		boneMap[name] = i;
 	}
+
+	hkArray<hkInt16> trackToBone;
+	std::vector<Niflib::NiTransformDataRef> transformData;
+
+	//Find all existing transform data and save their bone indices
+	vector<Niflib::ControllerLink> blocks = seq->GetControlledBlocks();
+	for (std::vector<Niflib::ControllerLink>::iterator it = blocks.begin(); it != blocks.end(); ++it) {
+		if (it->interpolator && it->interpolator->IsSameType(Niflib::NiTransformInterpolator::TYPE)) {
+
+			std::map<std::string, int, ltstr>::iterator boneitr = boneMap.find(it->nodeName);
+			if (boneitr != boneMap.end()) {
+
+				Niflib::NiTransformDataRef data = Niflib::StaticCast<Niflib::NiTransformInterpolator>(it->interpolator)->GetData();
+				if (data) {
+					trackToBone.pushBack(boneitr->second);
+					transformData.push_back(data);
+				}
+			}
+			else {
+				Log::Warn("Unknown bone '%s' found in animation. Skipping.", it->nodeName.c_str());
+			}
+		}
+	}
 	
-	//Include all bones 
-	//(Skyrim seems to keep all bones in all animations, unless they are additive. We might want an option for this)
-	int nTransforms = nbones;
-	//to prepare for generalising this to limited sets of bones, store a mapping of track index to bone index:
-	std::vector<int> trackToBone(nTransforms);
-	for (int i = 0; i < nTransforms; i++) { trackToBone[i] = i; }
+	//Include only keyframed bones if ADDITIVE, otherwise all
+	int nTransforms = binding->m_blendHint == hkaAnimationBinding::ADDITIVE ? trackToBone.getSize() : nbones;
 
 	float duration = seq->GetStopTime() - seq->GetStartTime();
 	int nframes = (int)roundf(duration / FramesIncrement) + 1;
-
-
-	int nCurrentFrame = 0;
 
 	hkRefPtr<hkaInterleavedUncompressedAnimation> tempAnim = new hkaInterleavedUncompressedAnimation();
 	tempAnim->m_duration = duration;
@@ -608,62 +631,46 @@ bool AnimationExport::exportController()
 	tempAnim->m_annotationTracks.setSize(nTransforms);
 
 	hkArray<hkQsTransform>& transforms = tempAnim->m_transforms;
-
-	//prefill with bind pose, in case some tracks are missing
-	for (int i = 0; i < nTransforms; i++) {
-		int boneIdx = trackToBone[i];
-		FillTransforms(transforms, boneIdx, nTransforms, skeleton->m_referencePose[boneIdx]);
+	
+	if (binding->m_blendHint == hkaAnimationBinding::NORMAL) {
+		//prefill with bind pose, in case some tracks are missing
+		//(might actually be a lot of wasted work if most tracks are keyframed)
+		for (int i = 0; i < nTransforms; i++)
+			FillTransforms(transforms, i, nTransforms, skeleton->m_referencePose[i]);
 	}
+	
+	//Transfer the actual keyframes
+	for (int i = 0; i < trackToBone.getSize(); i++) {
+		int trackIdx = binding->m_blendHint == hkaAnimationBinding::ADDITIVE ? i : trackToBone[i];
 
-	vector<Niflib::ControllerLink> blocks = seq->GetControlledBlocks();
-	for (std::vector<Niflib::ControllerLink>::iterator it = blocks.begin(); it != blocks.end(); ++it) {
-		//Only look at transform blocks
-		if (it->interpolator && it->interpolator->IsSameType(Niflib::NiTransformInterpolator::TYPE)) {
-			std::map<std::string, int, ltstr>::iterator boneitr = boneMap.find(it->nodeName);
-			if (boneitr != boneMap.end()) {
+		vector<Vector3Key> tKeys = transformData[i]->GetTranslateKeys();
+		if (!tKeys.empty()) {
+			Niflib::KeyType keyType = transformData[i]->GetTranslateType();
+			int keyHint = 0;
+			for (int frame = 0; frame < nframes; frame++)
+				SetIpltdTranslation(transforms, frame, nTransforms, trackIdx, tKeys, keyType, keyHint);
+		}
 
-				Niflib::NiTransformInterpolatorRef interpolator = 
-					Niflib::StaticCast<Niflib::NiTransformInterpolator>(it->interpolator);//we already checked
-				if (Niflib::NiTransformDataRef data = interpolator->GetData()) {
+		vector<QuatKey> rKeys = transformData[i]->GetQuatRotateKeys();
+		if (!rKeys.empty()) {
+			Niflib::KeyType keyType = transformData[i]->GetRotateType();
+			int keyHint = 0;
+			for (int frame = 0; frame < nframes; frame++)
+				SetIpltdRotation(transforms, frame, nTransforms, trackIdx, rKeys, keyType, keyHint);
+		}
 
-					int boneIdx = boneitr->second;
-
-					vector<Vector3Key> tKeys = data->GetTranslateKeys();
-					if (!tKeys.empty()) {
-						Niflib::KeyType keyType = data->GetTranslateType();
-						int keyHint = 0;
-						for (int i = 0; i < nframes; i++) {
-							SetIpltdTranslation(transforms, i, nbones, boneIdx, tKeys, keyType, keyHint);
-						}
-					}
-
-					vector<QuatKey> rKeys = data->GetQuatRotateKeys();
-					if (!rKeys.empty()) {
-						Niflib::KeyType keyType = data->GetRotateType();
-						int keyHint = 0;
-						for (int i = 0; i < nframes; i++) {
-							SetIpltdRotation(transforms, i, nbones, boneIdx, rKeys, keyType, keyHint);
-						}
-					}
-
-					vector<FloatKey> sKeys = data->GetScaleKeys();
-					if (!sKeys.empty()) {
-						Niflib::KeyType keyType = data->GetScaleType();
-						int keyHint = 0;
-						for (int i = 0; i < nframes; i++) {
-							SetIpltdScale(transforms, i, nbones, boneIdx, sKeys, keyType, keyHint);
-						}
-					}
-				}
-				else {
-					//Use the interpolator value?
-				}
-			}
-			else {
-				Log::Warn("Unknown bone '%s' found in animation. Skipping.", it->nodeName.c_str());
-			}
+		vector<FloatKey> sKeys = transformData[i]->GetScaleKeys();
+		if (!sKeys.empty()) {
+			Niflib::KeyType keyType = transformData[i]->GetScaleType();
+			int keyHint = 0;
+			for (int frame = 0; frame < nframes; frame++)
+				SetIpltdScale(transforms, frame, nTransforms, trackIdx, sKeys, keyType, keyHint);
 		}
 	}
+
+	//We're done with our mappings, pass to the binding
+	if (binding->m_blendHint == hkaAnimationBinding::ADDITIVE)
+		binding->m_transformTrackToBoneIndices.swap(trackToBone);
 
 	hkaSkeletonUtils::normalizeRotations (transforms.begin(), transforms.getSize()); 
 
@@ -886,6 +893,9 @@ static bool ExecuteCmd(hkxcmdLine &cmdLine)
 		{
 			switch (tolower(arg[1]))
 			{
+			case 'a':
+				AnimationExport::s_additiveBlend = true;
+				break;
 			case 'f':
 				{
 					const char *param = arg+2;
