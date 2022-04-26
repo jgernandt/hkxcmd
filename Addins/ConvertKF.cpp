@@ -388,21 +388,6 @@ namespace {
 	const float FramesIncrement = 0.033333f;
 }
 
-struct BoneDataReference
-{
-	string name;
-	NiTransformControllerRef transCont;
-	NiTransformInterpolatorRef interpolator;
-	NiTransformDataRef transData;
-	vector<Vector3Key> trans;
-	vector<QuatKey> rot;
-	vector<FloatKey> scale;
-
-	Vector3 lastTrans;
-	Quaternion lastRotate;
-	float lastScale;
-};
-
 static void FillTransforms( hkArray<hkQsTransform>& transforms, int boneIdx, int numTracks
 					, const hkQsTransform& localTransform, PosRotScale prs = prsDefault
 					, int from=0, int to=-1) 
@@ -453,40 +438,141 @@ static void PosRotScaleNode(hkQsTransform& transform, hkVector4& p, hkQuaternion
 	if (prs & prsRot) SetTransformRotation(transform, q);
 	if (prs & prsPos) SetTransformPosition(transform, p);
 }
-static void SetTransformPositionRange( hkArray<hkQsTransform>& transforms, int numTracks, int boneIdx
-						   , float &currentTime, float lastTime, int &frame
-						   , Vector3Key &first, Vector3Key &last)
+
+static void SetIpltdTranslation(hkArray<hkQsTransform>& transforms, int frame, int stride, int offset,
+								const vector<Vector3Key>& keys, Niflib::KeyType keyType, int& i)
 {
-	int n = transforms.getSize()/numTracks;
-	hkVector4 p = TOVECTOR4(first.data);
-	for ( ; COMPARE(currentTime, lastTime) <= 0 && frame < n; currentTime += FramesIncrement, ++frame)
-	{
-		hkQsTransform& transform = transforms[frame*numTracks + boneIdx];
-		SetTransformPosition(transform, p);
+	float t = frame * FramesIncrement;
+
+	//Find the first key greater in time than current frame
+	for (; i < keys.size() && keys[i].time <= t; i++) {}
+
+	hkVector4 T;
+	if (i == 0) {
+		//clamp to first (or should we use 0?)
+		T = TOVECTOR4(keys.front().data);
 	}
+	else if (i >= keys.size()) {
+		//clamp to last
+		T = TOVECTOR4(keys.back().data);
+	}
+	else {
+		if (EQUALS(keys[i - 1].time, t) || keyType == Niflib::CONST_KEY)
+			T = TOVECTOR4(keys[i - 1].data);
+		else if (EQUALS(keys[i].time, t))
+			T = TOVECTOR4(keys[i].data);
+		else {
+			//interpolate
+			float h = (keys[i].time - keys[i - 1].time);
+			float u = (t - keys[i - 1].time) / h;
+
+			//It seems as if both hkxcmd and the Niftools Blender plugin treat QUADRATIC_KEY
+			//as a general indicator of "smooth" interpolation. They aren't actually doing the
+			//quadratic interpolation, or even initialising the tangents.
+			//No point for us to do it either. Just stick to linear, whatever the type says.
+			const Niflib::Vector3& lo = keys[i - 1].data;
+			const Niflib::Vector3& hi = keys[i].data;
+			T = TOVECTOR4(lo + (hi - lo) * u);
+		}
+	}
+
+	SetTransformPosition(transforms[frame * stride + offset], T);
 }
-static void SetTransformRotationRange( hkArray<hkQsTransform>& transforms, int numTracks, int boneIdx
-									  , float &currentTime, float lastTime, int &frame
-									  , QuatKey &first, QuatKey &last)
+
+Niflib::Quaternion operator-(const Niflib::Quaternion& lhs, const Niflib::Quaternion& rhs)
 {
-	int n = transforms.getSize()/numTracks;
-	hkQuaternion q = TOQUAT(first.data);
-	for ( ; COMPARE(currentTime, lastTime) <= 0&& frame < n; currentTime += FramesIncrement, ++frame)
-	{
-		hkQsTransform& transform = transforms[frame*numTracks + boneIdx];
-		SetTransformRotation(transform, q);
-	}
+	return lhs + Niflib::Quaternion(-rhs.w, -rhs.x, -rhs.y, -rhs.z);
 }
-static void SetTransformScaleRange( hkArray<hkQsTransform>& transforms, int numTracks, int boneIdx
-									  , float &currentTime, float lastTime, int &frame
-									  , FloatKey &first, FloatKey &last)
+
+static void SetIpltdRotation(hkArray<hkQsTransform>& transforms, int frame, int stride, int offset,
+								const vector<QuatKey>& keys, Niflib::KeyType keyType, int& i)
 {
-	int n = transforms.getSize()/numTracks;
-	for ( ; COMPARE(currentTime, lastTime) <= 0 && frame < n; currentTime += FramesIncrement, ++frame)
-	{
-		hkQsTransform& transform = transforms[frame*numTracks + boneIdx];
-		SetTransformScale(transform, first.data);
+	float t = frame * FramesIncrement;
+
+	//Find the first key greater in time than current frame
+	for (; i < keys.size() && keys[i].time <= t; i++) {}
+
+	hkQuaternion R;
+	if (i == 0) {
+		//clamp to first (or should we use 0?)
+		R = TOQUAT(keys.front().data);
 	}
+	else if (i >= keys.size()) {
+		//clamp to last
+		R = TOQUAT(keys.back().data);
+	}
+	else {
+		if (keys[i - 1].time == t)
+			R = TOQUAT(keys[i - 1].data);
+		else if (keys[i].time == t)
+			R = TOQUAT(keys[i].data);
+		else {
+			if (EQUALS(keys[i - 1].time, t) || keyType == Niflib::CONST_KEY)
+				R = TOQUAT(keys[i - 1].data);
+			else if (EQUALS(keys[i].time, t))
+				R = TOQUAT(keys[i].data);
+			else {
+				//interpolate
+				float h = (keys[i].time - keys[i - 1].time);
+				float u = (t - keys[i - 1].time) / h;
+
+				//It seems as if both hkxcmd and the Niftools Blender plugin treat QUADRATIC_KEY
+				//as a general indicator of "smooth" interpolation. They aren't actually doing the
+				//quadratic interpolation, or even initialising the tangents.
+				//No point for us to do it either. Just stick to linear, whatever the type says.
+				const Niflib::Quaternion& lo = keys[i - 1].data;
+				const Niflib::Quaternion& hi = keys[i].data;
+				R = TOQUAT(lo + (hi - lo) * u);
+			}
+		}
+	}
+
+	SetTransformRotation(transforms[frame * stride + offset], R);
+}
+static void SetIpltdScale(hkArray<hkQsTransform>& transforms, int frame, int stride, int offset,
+								const vector<FloatKey>& keys, Niflib::KeyType keyType, int& i)
+{
+	float t = frame * FramesIncrement;
+
+	//Find the first key greater in time than current frame
+	for (; i < keys.size() && keys[i].time <= t; i++) {}
+
+	float S;
+	if (i == 0) {
+		//clamp to first (or should we use 0?)
+		S = keys.front().data;
+	}
+	else if (i >= keys.size()) {
+		//clamp to last
+		S = keys.back().data;
+	}
+	else {
+		if (keys[i - 1].time == t)
+			S = keys[i - 1].data;
+		else if (keys[i].time == t)
+			S = keys[i].data;
+		else {
+			if (EQUALS(keys[i - 1].time, t) || keyType == Niflib::CONST_KEY)
+				S = keys[i - 1].data;
+			else if (EQUALS(keys[i].time, t))
+				S = keys[i].data;
+			else {
+				//interpolate
+				float h = (keys[i].time - keys[i - 1].time);
+				float u = (t - keys[i - 1].time) / h;
+
+				//It seems as if both hkxcmd and the Niftools Blender plugin treat QUADRATIC_KEY
+				//as a general indicator of "smooth" interpolation. They aren't actually doing the
+				//quadratic interpolation, or even initialising the tangents.
+				//No point for us to do it either. Just stick to linear, whatever the type says.
+				float lo = keys[i - 1].data;
+				float hi = keys[i].data;
+				S = lo + (hi - lo) * u;
+			}
+		}
+	}
+
+	SetTransformScale(transforms[frame * stride + offset], S);
 }
 
 
@@ -512,7 +598,7 @@ bool AnimationExport::exportController()
 	int numTracks = nbones;
 
 	float duration = seq->GetStopTime() - seq->GetStartTime();
-	int nframes = (int)roundf(duration / FramesIncrement);
+	int nframes = (int)roundf(duration / FramesIncrement) + 1;
 
 
 	int nCurrentFrame = 0;
@@ -553,74 +639,31 @@ bool AnimationExport::exportController()
 		{
 			if (NiTransformDataRef data = interpolator->GetData())
 			{
-				if ( data->GetTranslateType() == Niflib::LINEAR_KEY )
-				{
-					vector<Vector3Key> keys = data->GetTranslateKeys();
-					int n = keys.size();
-					if (n > 0)
-					{
-						int frame = 0;
-						float currentTime = 0.0f;
-						Vector3Key* itr = &keys[0], *last = &keys[n-1];
-						SetTransformPositionRange(transforms, nbones, boneIdx, currentTime, (*itr).time, frame, *itr, *itr);
-						for (int i=1; i<n; ++i)
-						{
-							Vector3Key* next = &keys[i];
-							SetTransformPositionRange(transforms, nbones, boneIdx, currentTime, (*next).time, frame, *itr, *next);
-							itr = next;
-						}
-						SetTransformPositionRange(transforms, nbones, boneIdx, currentTime, duration, frame, *last, *last);
+				vector<Vector3Key> tKeys = data->GetTranslateKeys();
+				if (!tKeys.empty()) {
+					Niflib::KeyType keyType = data->GetTranslateType();
+					int keyHint = 0;
+					for (int i = 0; i < nframes; i++) {
+						SetIpltdTranslation(transforms, i, nbones, boneIdx, tKeys, keyType, keyHint);
 					}
 				}
-				else
-				{
-					Log::Verbose("Missing transform data for %s", boneitr->first.c_str());
-				}
-				if ( data->GetRotateType() == Niflib::QUADRATIC_KEY )
-				{
-					vector<QuatKey> keys = data->GetQuatRotateKeys();
-					int n = keys.size();
-					if (n > 0)
-					{
-						int frame = 0;
-						float currentTime = 0.0f;
-						QuatKey* itr = &keys[0], *last = &keys[n-1];
-						SetTransformRotationRange(transforms, nbones, boneIdx, currentTime, itr->time, frame, *itr, *itr);
-						for (int i=1; i<n; ++i)
-						{
-							QuatKey* next = &keys[i];
-							SetTransformRotationRange(transforms, nbones, boneIdx, currentTime, next->time, frame, *itr, *next);
-							itr = next;
-						}
-						SetTransformRotationRange(transforms, nbones, boneIdx, currentTime, duration, frame, *last, *last);
+
+				vector<QuatKey> rKeys = data->GetQuatRotateKeys();
+				if (!rKeys.empty()) {
+					Niflib::KeyType keyType = data->GetRotateType();
+					int keyHint = 0;
+					for (int i = 0; i < nframes; i++) {
+						SetIpltdRotation(transforms, i, nbones, boneIdx, rKeys, keyType, keyHint);
 					}
 				}
-				else
-				{
-					Log::Verbose("Missing rotation data for %s", boneitr->first.c_str());
-				}
-				if ( data->GetScaleType() == Niflib::LINEAR_KEY )
-				{
-					vector<FloatKey> keys = data->GetScaleKeys();
-					int n = keys.size();
-					if (n > 0)
-					{
-						int frame = 0;
-						float currentTime = 0.0f;
-						FloatKey* itr = &keys[0], *last = &keys[n-1];
-						SetTransformScaleRange(transforms, nbones, boneIdx, currentTime, itr->time, frame, *itr, *itr);
-						for (int i=1; i<n; ++i)
-						{
-							FloatKey* next = &keys[i];
-							SetTransformScaleRange(transforms, nbones, boneIdx, currentTime, next->time, frame, *itr, *next);
-							itr = next;
-						}
-						SetTransformScaleRange(transforms, nbones, boneIdx, currentTime, duration, frame, *last, *last);
+
+				vector<FloatKey> sKeys = data->GetScaleKeys();
+				if (!sKeys.empty()) {
+					Niflib::KeyType keyType = data->GetScaleType();
+					int keyHint = 0;
+					for (int i = 0; i < nframes; i++) {
+						SetIpltdScale(transforms, i, nbones, boneIdx, sKeys, keyType, keyHint);
 					}
-				}
-				else
-				{
-					Log::Verbose("Missing scaling data for %s", boneitr->first.c_str());
 				}
 			}
 			else
