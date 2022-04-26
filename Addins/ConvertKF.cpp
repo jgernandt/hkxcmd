@@ -204,6 +204,8 @@ static void HelpString(hkxcmd::HelpType type){
 			Log::Info("");
 			Log::Info(" -a             Treat as ADDITIVE animation" );
 			Log::Info("");
+			Log::Info(" -l             Convert float tracks");
+			Log::Info("");
 		}
 		break;
 	}
@@ -270,9 +272,11 @@ struct AnimationExport
 
 	static bool noRootSiblings;
 	static bool s_additiveBlend;
+	static bool s_convertFloatTracks;
 };
 bool AnimationExport::noRootSiblings = true;
 bool AnimationExport::s_additiveBlend = false;
+bool AnimationExport::s_convertFloatTracks = false;
 }
 
 AnimationExport::AnimationExport(NiControllerSequenceRef seq, hkRefPtr<hkaSkeleton> skeleton, hkRefPtr<hkaAnimationBinding> binding)
@@ -444,6 +448,7 @@ static void PosRotScaleNode(hkQsTransform& transform, hkVector4& p, hkQuaternion
 	if (prs & prsPos) SetTransformPosition(transform, p);
 }
 
+//Template? Or can't be bothered?
 static void SetIpltdTranslation(hkArray<hkQsTransform>& transforms, int frame, int stride, int offset,
 								const vector<Vector3Key>& keys, Niflib::KeyType keyType, int& i)
 {
@@ -579,29 +584,85 @@ static void SetIpltdScale(hkArray<hkQsTransform>& transforms, int frame, int str
 
 	SetTransformScale(transforms[frame * stride + offset], S);
 }
+static void SetIpltdFloat(hkArray<hkReal>& floats, int frame, int stride, int offset,
+								const vector<FloatKey>& keys, Niflib::KeyType keyType, int& i)
+{
+	float t = frame * FramesIncrement;
+
+	//Find the first key greater in time than current frame
+	for (; i < keys.size() && keys[i].time <= t; i++) {}
+
+	float f;
+	if (i == 0) {
+		//clamp to first (or should we use 0?)
+		f = keys.front().data;
+	}
+	else if (i >= keys.size()) {
+		//clamp to last
+		f = keys.back().data;
+	}
+	else {
+		if (keys[i - 1].time == t)
+			f = keys[i - 1].data;
+		else if (keys[i].time == t)
+			f = keys[i].data;
+		else {
+			if (EQUALS(keys[i - 1].time, t) || keyType == Niflib::CONST_KEY)
+				f = keys[i - 1].data;
+			else if (EQUALS(keys[i].time, t))
+				f = keys[i].data;
+			else {
+				//interpolate
+				float h = (keys[i].time - keys[i - 1].time);
+				float u = (t - keys[i - 1].time) / h;
+
+				//It seems as if both hkxcmd and the Niftools Blender plugin treat QUADRATIC_KEY
+				//as a general indicator of "smooth" interpolation. They aren't actually doing the
+				//quadratic interpolation, or even initialising the tangents.
+				//No point for us to do it either. Just stick to linear, whatever the type says.
+				float lo = keys[i - 1].data;
+				float hi = keys[i].data;
+				f = lo + (hi - lo) * u;
+			}
+		}
+	}
+	floats[frame * stride + offset] = f;
+}
 
 bool AnimationExport::exportController()
 {
 	if (s_additiveBlend)
 		binding->m_blendHint = hkaAnimationBinding::ADDITIVE;
 
+	typedef std::map<std::string, int, ltstr> StringIntMap;
+
 	//Map bones
-	std::map<std::string, int, ltstr> boneMap;
+	StringIntMap boneMap;
 	int nbones = skeleton->m_bones.getSize();
 	for (int i = 0; i < nbones; i++) {
 		std::string name = skeleton->m_bones[i].m_name;
 		boneMap[name] = i;
 	}
 
+	//Map float tracks
+	StringIntMap floatMap;
+	for (int i = 0; i < skeleton->m_floatSlots.getSize(); i++) {
+		std::string name = skeleton->m_floatSlots[i];
+		floatMap[name] = i;
+	}
+
 	hkArray<hkInt16> trackToBone;
 	std::vector<Niflib::NiTransformDataRef> transformData;
+
+	hkArray<hkInt16> trackToFloat;
+	std::vector<Niflib::NiFloatDataRef> floatData;
 
 	//Find all existing transform data and save their bone indices
 	vector<Niflib::ControllerLink> blocks = seq->GetControlledBlocks();
 	for (std::vector<Niflib::ControllerLink>::iterator it = blocks.begin(); it != blocks.end(); ++it) {
 		if (it->interpolator && it->interpolator->IsSameType(Niflib::NiTransformInterpolator::TYPE)) {
 
-			std::map<std::string, int, ltstr>::iterator boneitr = boneMap.find(it->nodeName);
+			StringIntMap::iterator boneitr = boneMap.find(it->nodeName);
 			if (boneitr != boneMap.end()) {
 
 				Niflib::NiTransformDataRef data = Niflib::StaticCast<Niflib::NiTransformInterpolator>(it->interpolator)->GetData();
@@ -614,10 +675,29 @@ bool AnimationExport::exportController()
 				Log::Warn("Unknown bone '%s' found in animation. Skipping.", it->nodeName.c_str());
 			}
 		}
+
+		if (s_convertFloatTracks) {
+			if (it->interpolator && it->interpolator->IsSameType(Niflib::NiFloatInterpolator::TYPE)) {
+
+				StringIntMap::iterator floatitr = floatMap.find(it->nodeName);
+				if (floatitr != floatMap.end()) {
+
+					Niflib::NiFloatDataRef data = Niflib::StaticCast<Niflib::NiFloatInterpolator>(it->interpolator)->GetData();
+					if (data) {
+						trackToFloat.pushBack(floatitr->second);
+						floatData.push_back(data);
+					}
+				}
+				else {
+					Log::Warn("Unknown float '%s' found in animation. Skipping.", it->nodeName.c_str());
+				}
+			}
+		}
 	}
-	
+
 	//Include only keyframed bones if ADDITIVE, otherwise all
 	int nTransforms = binding->m_blendHint == hkaAnimationBinding::ADDITIVE ? trackToBone.getSize() : nbones;
+	int nFloats = s_convertFloatTracks ? floatData.size() : 0;
 
 	float duration = seq->GetStopTime() - seq->GetStartTime();
 	int nframes = (int)roundf(duration / FramesIncrement) + 1;
@@ -625,12 +705,13 @@ bool AnimationExport::exportController()
 	hkRefPtr<hkaInterleavedUncompressedAnimation> tempAnim = new hkaInterleavedUncompressedAnimation();
 	tempAnim->m_duration = duration;
 	tempAnim->m_numberOfTransformTracks = nTransforms;
-	tempAnim->m_numberOfFloatTracks = 0;//anim->m_numberOfFloatTracks;
-	tempAnim->m_transforms.setSize(nTransforms*nframes, hkQsTransform::getIdentity());
-	tempAnim->m_floats.setSize(tempAnim->m_numberOfFloatTracks);
+	tempAnim->m_numberOfFloatTracks = nFloats;
+	tempAnim->m_transforms.setSize(nTransforms * nframes, hkQsTransform::getIdentity());
+	tempAnim->m_floats.setSize(nFloats * nframes, 0.0f);
 	tempAnim->m_annotationTracks.setSize(nTransforms);
 
 	hkArray<hkQsTransform>& transforms = tempAnim->m_transforms;
+	hkArray<hkReal>& floats = tempAnim->m_floats;
 	
 	if (binding->m_blendHint == hkaAnimationBinding::NORMAL) {
 		//prefill with bind pose, in case some tracks are missing
@@ -638,7 +719,7 @@ bool AnimationExport::exportController()
 		for (int i = 0; i < nTransforms; i++)
 			FillTransforms(transforms, i, nTransforms, skeleton->m_referencePose[i]);
 	}
-	
+
 	//Transfer the actual keyframes
 	for (int i = 0; i < trackToBone.getSize(); i++) {
 		int trackIdx = binding->m_blendHint == hkaAnimationBinding::ADDITIVE ? i : trackToBone[i];
@@ -674,6 +755,21 @@ bool AnimationExport::exportController()
 
 	hkaSkeletonUtils::normalizeRotations (transforms.begin(), transforms.getSize()); 
 
+	//Do the same with float tracks
+	if (s_convertFloatTracks) {
+		for (int i = 0; i < trackToFloat.getSize(); i++) {
+			vector<FloatKey> fKeys = floatData[i]->GetKeys();
+			if (!fKeys.empty()) {
+				Niflib::KeyType keyType = floatData[i]->GetKeyType();
+				int keyHint = 0;
+				for (int frame = 0; frame < nframes; frame++)
+					SetIpltdFloat(floats, frame, nFloats, i, fKeys, keyType, keyHint);
+			}
+		}
+
+		binding->m_floatTrackToFloatSlotIndices.swap(trackToFloat);
+	}
+
 	// create the animation with default settings
 	{
 		hkaSplineCompressedAnimation::TrackCompressionParams tparams;
@@ -685,7 +781,7 @@ bool AnimationExport::exportController()
 		hkRefPtr<hkaSplineCompressedAnimation> outAnim = new hkaSplineCompressedAnimation( *tempAnim.val(), tparams, aparams ); 
 		binding->m_animation = outAnim;
 	}
-	
+
 	return true;
 }
 
@@ -908,8 +1004,11 @@ static bool ExecuteCmd(hkxcmdLine &cmdLine)
 					if ( param[0] == 0 )
 						break;
 					flags = (hkSerializeUtil::SaveOptionBits)StringToFlags(param, SaveFlags, hkSerializeUtil::SAVE_DEFAULT);
-				} break;
-
+				} 
+				break;
+			case 'l':
+				AnimationExport::s_convertFloatTracks = true;
+				break;
 			case 'n':
 				recursion = false;
 				break;
